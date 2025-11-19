@@ -113,10 +113,17 @@
             <div class="bg-blue-50 p-4 rounded-lg">
               <h4 class="text-lg font-medium text-blue-700 mb-2">Переваги:</h4>
               <ul class="text-gray-600 list-disc ml-5">
-                <li>Чітка відповідність ACID</li>
-                <li>Просте управління даними</li>
-                <li>Узгоджені транзакції</li>
-                <li>Незалежність сервісів збережена</li>
+                <li>Висока ізоляція сервісів (fail-safe при збоях)</li>
+                <li>Локальні транзакції швидші</li>
+                <li>Чіткий розподіл відповідальностей</li>
+              </ul>
+            </div>
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h4 class="text-lg font-medium text-blue-700 mb-2">Недоліки:</h4>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Важко забезпечити узгодженість між сервісами</li>
+                <li>Складна міжсервісна координація</li>
+                <li>Схильність до проблем із дублікатами, race conditions</li>
               </ul>
             </div>
           </div>
@@ -175,6 +182,13 @@
                 <li>Просте управління даними</li>
                 <li>Узгоджені транзакції</li>
                 <li>Незалежність сервісів збережена</li>
+              </ul>
+            </div>
+            <div class="bg-blue-50 p-4 rounded-lg">
+              <h4 class="text-lg font-medium text-blue-700 mb-2">Недоліки:</h4>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Більше навантаження на базу</li>
+                <li>Можлива точка відмови без кластеризації</li>
               </ul>
             </div>
           </div>
