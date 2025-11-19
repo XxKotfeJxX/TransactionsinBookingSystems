@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Підсумок та порівняння</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+
+<style>
+    /* Загальний стиль wrapper як у всіх попередніх сторінок */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+
+    .slide {
+        width: 100%;
+        height: 100%;
+        background: white;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+
+    .title-bar {
+        background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+    }
+
+    .comparison-table {
+        border-collapse: separate;
+        border-spacing: 0;
+    }
+    .comparison-table th {
+        position: relative;
+        padding: 12px 15px;
+        background: #F9FAFB;
+        font-weight: 600;
+        text-align: center;
+        border-bottom: 2px solid #E5E7EB;
+    }
+    .comparison-table td {
+        padding: 15px;
+        border-bottom: 1px solid #E5E7EB;
+        text-align: center;
+    }
+    .comparison-table tr:last-child td {
+        border-bottom: 2px solid #E5E7EB;
+    }
+
+    .rating-excellent { color: #10B981; }
+    .rating-good { color: #3B82F6; }
+    .rating-moderate { color: #F59E0B; }
+    .rating-limited { color: #EF4444; }
+
+    .summary-box {
+        border-left: 4px solid #3B82F6;
+        background-color: #F0F7FF;
+    }
+
+    .page-number {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+        font-size: 14px;
+        color: #6B7280;
+        visibility: hidden;
+    }
+</style>
+</head>
+
+<body>
+<div class="wrapper">
+<div class="slide">
+
+<!-- Title -->
+<div class="title-bar py-4 px-10 text-white">
+  <h1 class="text-3xl font-bold">Підсумок та порівняння</h1>
+</div>
+
+<!-- Main content -->
+<div class="flex-1 p-8">
+
+<h2 class="text-xl text-gray-600 mb-4">Порівняння підходів до керування транзакціями</h2>
+
+<div class="overflow-hidden rounded-lg shadow-lg">
+<table class="comparison-table w-full">
+<thead>
+<tr>
+<th class="w-1/5">Підхід</th>
+<th class="w-1/5">Консистентність</th>
+<th class="w-1/5">Масштабованість</th>
+<th class="w-1/5">Складність</th>
+<th class="w-1/5">Стійкість до збоїв</th>
+</tr>
+</thead>
+
+<tbody>
+
+<!-- Monolithic -->
+<tr class="bg-white">
+<td class="font-medium text-left">
+  <div class="flex items-center">
+    <i class="fas fa-database text-gray-500 mr-3"></i>
+    Монолітна БД
+  </div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-excellent"></i>
+    <i class="fas fa-star rating-excellent"></i>
+    <i class="fas fa-star rating-excellent"></i>
+  </div>
+  <div class="text-sm mt-1">Сильна</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-limited"></i>
+  </div>
+  <div class="text-sm mt-1">Обмежена</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-excellent"></i>
+  </div>
+  <div class="text-sm mt-1">Проста</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-moderate"></i>
+    <i class="fas fa-star rating-moderate"></i>
+  </div>
+  <div class="text-sm mt-1">Середня</div>
+</td>
+</tr>
+
+<!-- 2PC -->
+<tr class="bg-gray-50">
+<td class="font-medium text-left">
+  <div class="flex items-center">
+    <i class="fas fa-handshake text-gray-500 mr-3"></i>
+    Двофазна фіксація (2PC)
+  </div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-excellent"></i>
+    <i class="fas fa-star rating-excellent"></i>
+  </div>
+  <div class="text-sm mt-1">Сильна</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-limited"></i>
+    <i class="fas fa-star rating-limited"></i>
+  </div>
+  <div class="text-sm mt-1">Обмежена</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-limited"></i>
+  </div>
+  <div class="text-sm mt-1">Складна</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-good"></i>
+    <i class="fas fa-star rating-good"></i>
+  </div>
+  <div class="text-sm mt-1">Добра</div>
+</td>
+</tr>
+
+<!-- Saga -->
+<tr class="bg-white">
+<td class="font-medium text-left">
+  <div class="flex items-center">
+    <i class="fas fa-project-diagram text-gray-500 mr-3"></i>
+    Шаблон Saga
+  </div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-moderate"></i>
+    <i class="fas fa-star rating-moderate"></i>
+  </div>
+  <div class="text-sm mt-1">Поступова</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-excellent"></i>
+    <i class="fas fa-star rating-excellent"></i>
+  </div>
+  <div class="text-sm mt-1">Висока</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-good"></i>
+  </div>
+  <div class="text-sm mt-1">Середня</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-good"></i>
+    <i class="fas fa-star rating-good"></i>
+    <i class="fas fa-star rating-good"></i>
+  </div>
+  <div class="text-sm mt-1">Добра</div>
+</td>
+</tr>
+
+<!-- Distributed SQL -->
+<tr class="bg-gray-50">
+<td class="font-medium text-left">
+  <div class="flex items-center">
+    <i class="fas fa-server text-gray-500 mr-3"></i>
+    Розподілений SQL
+  </div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-good"></i>
+    <i class="fas fa-star rating-good"></i>
+  </div>
+  <div class="text-sm mt-1">Сильна</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-excellent"></i>
+    <i class="fas fa-star rating-excellent"></i>
+  </div>
+  <div class="text-sm mt-1">Висока</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-moderate"></i>
+  </div>
+  <div class="text-sm mt-1">Середня</div>
+</td>
+<td>
+  <div class="flex justify-center">
+    <i class="fas fa-star rating-good"></i>
+    <i class="fas fa-star rating-good"></i>
+  </div>
+  <div class="text-sm mt-1">Добра</div>
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+
+<!-- Summary box -->
+<div class="summary-box mt-6 p-4">
+<p class="text-gray-700">
+  <span class="font-semibold">Головний висновок:</span>  
+  Обирайте підхід до керування транзакціями залежно від вимог системи.  
+  Жоден варіант не є найкращим у всьому.  
+  Сучасні системи бронювання часто комбінують підходи, щоб досягти оптимальної надійності та продуктивності.
+</p>
+</div>
+
+</div>
+
+<div class="page-number">12/12</div>
+</div>
+</div>
+
+</body>
+</html>

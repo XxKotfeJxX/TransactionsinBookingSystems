@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sabre та Amadeus</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      font-family: sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .slide {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .title-bar {
+      background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+      padding: 1rem 2rem;
+      color: white;
+    }
+    .image-container {
+      height: 240px;
+      overflow: hidden;
+    }
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .evolution-card {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+    .evolution-card:hover {
+      transform: translateY(-6px);
+    }
+    .feature-item {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+    .feature-icon {
+      width: 28px;
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      margin-right: 12px;
+      flex-shrink: 0;
+    }
+    .timeline-arrow {
+  color: #3B82F6;
+  font-size: 36px;
+}
+  </style>
+</head>
+<body>
+  <div class="slide">
+    <!-- Заголовок -->
+    <div class="title-bar">
+      <h1 class="text-3xl font-bold">Sabre та Amadeus</h1>
+    </div>
+
+    <!-- Основна частина -->
+    <div class="flex-1 p-6">
+      <h2 class="text-xl text-gray-600 text-center mb-8">Еволюція глобальних систем дистрибуції (GDS)</h2>
+
+      <div class="flex h-full items-stretch">
+        <!-- Історичний блок -->
+        <div class="w-1/2 pr-6 border-r border-none">
+          <div class="evolution-card overflow-hidden h-full">
+            <div class="image-container">
+              <img src="https://picture-search.skywork.ai/aippt/image/sheet/58a26267e4e184a66ce1369d153cbd6b.jpg" alt="Історична система Sabre">
+            </div>
+            <div class="p-5">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Історичне походження</h3>
+              <div class="feature-item">
+                <div class="feature-icon bg-blue-100"><i class="fas fa-history text-blue-600"></i></div>
+                <p class="text-gray-700">SABRE: Напівавтоматизована бізнес-система</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-blue-100"><i class="fas fa-building text-blue-600"></i></div>
+                <p class="text-gray-700">Спільна розробка American Airlines + IBM, 1960-ті</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-blue-100"><i class="fas fa-desktop text-blue-600"></i></div>
+                <p class="text-gray-700">Мейнфрейми та телетайпи</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-blue-100"><i class="fas fa-clock text-blue-600"></i></div>
+                <p class="text-gray-700">Час бронювання: з 90 хв до кількох секунд</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Стрілочка -->
+        <div class="flex flex-col items-center justify-center px-2">
+          <div class="timeline-arrow">
+  <i class="fas fa-arrow-right"></i>
+</div>
+        </div>
+
+        <!-- Сучасний блок -->
+        <div class="w-1/2 pl-6">
+          <div class="evolution-card overflow-hidden h-full">
+            <div class="image-container">
+              <img src="https://picture-search.skywork.ai/aippt/image/sheet/e74749f202fe3d983fab51580747cf2e_crop.jpg" alt="Сучасна інфраструктура Amadeus">
+            </div>
+            <div class="p-5">
+              <h3 class="text-2xl font-bold text-gray-800 mb-4">Сучасна архітектура</h3>
+              <div class="feature-item">
+                <div class="feature-icon bg-green-100"><i class="fas fa-cloud text-green-600"></i></div>
+                <p class="text-gray-700">Хмарна інфраструктура, мільярди транзакцій щодня</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-green-100"><i class="fas fa-globe text-green-600"></i></div>
+                <p class="text-gray-700">Інвентар у реальному часі від сотень авіакомпаній</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-green-100"><i class="fas fa-hotel text-green-600"></i></div>
+                <p class="text-gray-700">Amadeus: 400+ авіаліній, Sabre: понад 420</p>
+              </div>
+              <div class="feature-item">
+                <div class="feature-icon bg-green-100"><i class="fas fa-code text-green-600"></i></div>
+                <p class="text-gray-700">API (SOAP/REST) для повної інтеграції з системами</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

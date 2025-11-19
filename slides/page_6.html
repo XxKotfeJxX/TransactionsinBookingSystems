@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Приклад транзакції SQL</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .slide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .title-bar {
+      background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+      padding: 1rem 2.5rem;
+      color: white;
+    }
+    .code-block {
+      font-family: 'Courier New', monospace;
+      background-color: #f8f9fa;
+      border-left: 4px solid #3B82F6;
+      border-radius: 8px;
+      padding: 1rem;
+      overflow-x: auto;
+      max-height: 420px;
+    }
+    .annotation {
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+    .annotation:hover {
+      background-color: #f0f7ff;
+    }
+    .annotation-seat { border-color: #3B82F6; }
+    .annotation-booking { border-color: #10B981; }
+    .annotation-payment { border-color: #F59E0B; }
+    .annotation-commit { border-color: #8B5CF6; }
+    .line-number {
+      color: #6B7280;
+      user-select: none;
+      text-align: right;
+    }
+    .keyword {
+      color: #3B82F6;
+      font-weight: bold;
+    }
+    .comment {
+      color: #6B7280;
+      font-style: italic;
+    }
+    .string {
+      color: #059669;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="slide">
+      <!-- Верхній заголовок -->
+      <div class="title-bar">
+        <h1 class="text-3xl font-bold">Приклад транзакції SQL</h1>
+      </div>
+
+      <!-- Основний контент -->
+      <div class="flex-1 p-8">
+        <p class="text-gray-700 mb-4">Приклад SQL-транзакції для операції бронювання:</p>
+        <div class="flex h-full gap-6">
+          <!-- Код -->
+          <div class="code-block w-1/2 text-sm">
+<pre><span class="keyword">BEGIN</span>;
+<span class="comment">-- Початок атомарної операції</span>
+<span class="keyword">UPDATE</span> Seats
+<span class="keyword">SET</span> status = <span class="string">'PENDING'</span>,
+    booked_by_transaction_id = <span class="string">'T'</span>
+<span class="keyword">WHERE</span> seat_id = <span class="string">'F12A'</span> <span class="keyword">AND</span> status = <span class="string">'AVAILABLE'</span>
+<span class="keyword">FOR UPDATE</span>;
+<span class="comment">-- Блокує вибране місце</span>
+<span class="keyword">INSERT INTO</span> Bookings (booking_id, user_id, seat_id, booking_date, status)
+<span class="keyword">VALUES</span> (<span class="string">'B'</span>, <span class="string">'U'</span>, <span class="string">'F12A'</span>, NOW(), <span class="string">'CONFIRMED'</span>);
+<span class="comment">-- Запис нового бронювання</span>
+<span class="keyword">UPDATE</span> UserAccounts
+<span class="keyword">SET</span> balance = balance - <span class="string">150.00</span>
+<span class="keyword">WHERE</span> user_id = <span class="string">'U'</span> <span class="keyword">AND</span> balance >= <span class="string">150.00</span>;
+<span class="comment">-- Списання коштів</span>
+<span class="keyword">COMMIT</span>;
+<span class="comment">-- Фіксація змін</span></pre>
+          </div>
+
+          <!-- Анотації -->
+          <div class="w-1/2 space-y-4">
+            <div class="annotation annotation-seat p-3 rounded-r-lg">
+              <div class="flex items-start">
+                <i class="fas fa-lock text-blue-500 mr-3 mt-1"></i>
+                <div>
+                  <h3 class="text-lg font-bold text-blue-600">Блокування місця</h3>
+                  <p class="text-gray-700 text-sm">Блокує запис про місце для уникнення конкурентних змін до завершення транзакції.</p>
+                </div>
+              </div>
+            </div>
+            <div class="annotation annotation-booking p-3 rounded-r-lg">
+              <div class="flex items-start">
+                <i class="fas fa-plus-circle text-green-500 mr-3 mt-1"></i>
+                <div>
+                  <h3 class="text-lg font-bold text-green-600">Запис бронювання</h3>
+                  <p class="text-gray-700 text-sm">Додає новий запис до таблиці Bookings із деталями бронювання.</p>
+                </div>
+              </div>
+            </div>
+            <div class="annotation annotation-payment p-3 rounded-r-lg">
+              <div class="flex items-start">
+                <i class="fas fa-credit-card text-yellow-600 mr-3 mt-1"></i>
+                <div>
+                  <h3 class="text-lg font-bold text-yellow-600">Обробка платежу</h3>
+                  <p class="text-gray-700 text-sm">Оновлює баланс користувача із перевіркою, чи вистачає коштів.</p>
+                </div>
+              </div>
+            </div>
+            <div class="annotation annotation-commit p-3 rounded-r-lg">
+              <div class="flex items-start">
+                <i class="fas fa-check-circle text-purple-600 mr-3 mt-1"></i>
+                <div>
+                  <h3 class="text-lg font-bold text-purple-600">Фіксація транзакції</h3>
+                  <p class="text-gray-700 text-sm">Зберігає всі зміни, якщо немає помилок. Інакше — відкат.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

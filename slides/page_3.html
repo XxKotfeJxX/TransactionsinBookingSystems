@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ізоляція Транзакцій і Блокування</title>
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .title-bar {
+      background: linear-gradient(90deg, #3B82F6, #60A5FA);
+      padding: 1rem 2rem;
+      color: white;
+    }
+
+    .timeline-box {
+      border: 1px solid #E5E7EB;
+      background: #FFFFFF;
+      border-radius: 0.5rem;
+      padding: 1rem;
+      height: 340px;
+      position: relative;
+      font-size: 0.875rem;
+    }
+
+    .timeline-bar {
+      width: 2px;
+      height: 90%;
+      position: absolute;
+      top: 1.5rem;
+    }
+
+    .timeline-event {
+      position: absolute;
+      left: 2rem;
+      padding: 0.25rem 0.5rem;
+      border-radius: 0.375rem;
+      font-size: 0.875rem;
+      white-space: nowrap;
+    }
+
+    .divider-badge {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #3B82F6;
+      color: white;
+      font-weight: bold;
+      border-radius: 50%;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <div class="slide">
+
+      <!-- Верхня панель -->
+      <div class="title-bar">
+        <h1 class="text-3xl font-bold">Ізоляція транзакцій і блокування</h1>
+      </div>
+
+      <!-- Контент -->
+      <div class="flex flex-row flex-grow p-8 gap-6">
+
+        <!-- Ліва частина — без блокування -->
+        <div class="flex flex-col w-1/2 bg-red-50 rounded-lg p-4 shadow-sm">
+          <h2 class="text-xl font-bold text-red-600 mb-3">
+            <i class="fas fa-exclamation-triangle mr-2"></i>
+            Паралельні транзакції: Конфлікт
+          </h2>
+
+          <div class="timeline-box">
+            <div class="timeline-bar" style="left: 2.5rem; background-color: #3B82F6;"></div>
+            <div class="timeline-bar" style="left: 17.5rem; background-color: #10B981;"></div>
+
+            <div class="timeline-event bg-green-100 text-green-700 top-4" style="left: 1.25rem;">T2 Start</div>
+            <div class="timeline-event bg-blue-100 text-blue-700 top-4" style="left: 16.25rem;">T1 Start</div>
+
+            <div class="timeline-event bg-blue-100 text-blue-700 top-20" style="left: 16.25rem;">
+              Update Seat_A_Status → Pending
+            </div>
+
+            <div class="timeline-event bg-green-100 text-green-700 top-24" style="left: 1.25rem;">
+              Read Seat_A_Status → Pending
+            </div>
+
+            <div class="timeline-event bg-yellow-100 text-yellow-800 top-32" style="left: 1.25rem;">
+              Використано некоректні дані
+            </div>
+
+            <div class="timeline-event bg-red-100 text-red-700 top-44" style="left: 16.25rem;">
+              Rollback T1
+            </div>
+
+            <div class="absolute text-red-500 text-xs" style="top: 64px; left: 4rem;">
+              → T1 пише, T2 читає непідтверджене
+            </div>
+
+            <div class="absolute left-8 top-[280px] text-red-500 font-bold">
+              ❌ Dirty Read!
+            </div>
+          </div>
+
+          <p class="mt-3 text-sm text-gray-700">
+            <strong>Проблема:</strong> T2 читає незбережені дані від T1. Якщо T1 скасовується, T2 приймає хибне рішення.
+          </p>
+        </div>
+
+        <!-- Центральний розділювач -->
+        <div class="flex items-center justify-center">
+          <div class="divider-badge">VS</div>
+        </div>
+
+        <!-- Права частина — з блокуванням -->
+        <div class="flex flex-col w-1/2 bg-green-50 rounded-lg p-4 shadow-sm">
+          <h2 class="text-xl font-bold text-green-600 mb-3">
+            <i class="fas fa-lock mr-2"></i>
+            Паралельні транзакції: З блокуванням
+          </h2>
+
+          <div class="timeline-box">
+            <div class="timeline-bar" style="left: 2.5rem; background-color: #3B82F6;"></div>
+            <div class="timeline-bar" style="left: 17.5rem; background-color: #10B981;"></div>
+
+            <div class="timeline-event bg-green-100 text-green-700 top-4" style="left: 1.25rem;">T2 Start</div>
+            <div class="timeline-event bg-blue-100 text-blue-700 top-4" style="left: 16.25rem;">T1 Start</div>
+
+            <div class="timeline-event bg-blue-100 text-blue-700 top-20" style="left: 16.25rem;">
+              Lock Seat_A_Status
+            </div>
+
+            <div class="timeline-event bg-blue-100 text-blue-700 top-32" style="left: 16.25rem;">
+              Update Seat_A_Status → Pending
+            </div>
+
+            <div class="timeline-event bg-green-100 text-green-700 top-20" style="left: 1.25rem;">
+              Attempt to read Seat_A_Status
+            </div>
+
+            <div class="timeline-event bg-yellow-100 text-yellow-800 top-32" style="left: 1.25rem;">
+              Очікує завершення T1
+            </div>
+
+            <div class="timeline-event bg-blue-100 text-blue-700 top-44" style="left: 16.25rem;">
+              Commit T1
+            </div>
+
+            <div class="timeline-event bg-green-100 text-green-700 top-[280px]" style="left: 1.25rem;">
+              Read Seat_A_Status = Pending
+            </div>
+          </div>
+
+          <p class="mt-3 text-sm text-gray-700">
+            <strong>Рішення:</strong> T2 чекає завершення T1 перед доступом до даних, що забезпечує узгодженість.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>

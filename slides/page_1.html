@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Транзакції у системах бронювання</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6; /* світло-сірий фон */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .slide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .connection-line {
+      height: 3px;
+      background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { opacity: 0.6; }
+      50% { opacity: 1; }
+      100% { opacity: 0.6; }
+    }
+    .icon-container {
+      width: 80px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      transition: all 0.3s ease;
+    }
+    .icon-container:hover {
+      transform: scale(1.05);
+    }
+    .booking-flow {
+      width: 800px;
+      height: 120px;
+    }
+    .author-badge {
+      background: #ECFDF5;
+      border-left: 4px solid #10B981;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      font-weight: 500;
+      color: #065F46;
+      border-radius: 0.375rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="slide">
+      <!-- Верхній декоративний елемент -->
+      <div class="w-full h-8 bg-gradient-to-r from-blue-100 to-transparent"></div>
+
+      <!-- Основний контент -->
+      <div class="flex flex-col items-center justify-center flex-grow px-16">
+        <h1 class="text-5xl font-bold text-gray-800 mb-6 text-center tracking-tight">
+          Транзакції у системах бронювання
+        </h1>
+        <h2 class="text-3xl font-medium text-blue-600 mb-12 text-center">
+          Авіаквитки та готелі
+        </h2>
+
+        <!-- Потік бронювання -->
+        <div class="booking-flow flex items-center justify-between mb-12">
+          <div class="flex flex-col items-center">
+            <div class="icon-container bg-blue-100 shadow-md">
+              <i class="fas fa-user text-4xl text-blue-600"></i>
+            </div>
+            <p class="mt-3 text-lg font-medium text-gray-700">Користувач</p>
+          </div>
+          <div class="flex-1 mx-4"><div class="connection-line"></div></div>
+          <div class="flex flex-col items-center">
+            <div class="icon-container bg-blue-200 shadow-md">
+              <i class="fas fa-plane text-4xl text-blue-700"></i>
+            </div>
+            <p class="mt-3 text-lg font-medium text-gray-700">Система</p>
+          </div>
+          <div class="flex-1 mx-4"><div class="connection-line"></div></div>
+          <div class="flex flex-col items-center">
+            <div class="icon-container bg-blue-300 shadow-md">
+              <i class="fas fa-database text-4xl text-blue-800"></i>
+            </div>
+            <p class="mt-3 text-lg font-medium text-gray-700">База даних</p>
+          </div>
+          <div class="flex-1 mx-4"><div class="connection-line"></div></div>
+          <div class="flex flex-col items-center">
+            <div class="icon-container bg-green-100 shadow-md">
+              <i class="fas fa-check-circle text-4xl text-green-600"></i>
+            </div>
+            <p class="mt-3 text-lg font-medium text-gray-700">Підтверджено</p>
+          </div>
+        </div>
+
+        <!-- Авторський бейдж -->
+        <div class="author-badge">
+          Підготував студент групи ПП-24 Андрусевич Андрій
+        </div>
+      </div>
+
+      <!-- Нижній декоративний елемент -->
+      <div class="w-full h-8 bg-gradient-to-r from-transparent to-blue-100"></div>
+    </div>
+  </div>
+</body>
+</html>

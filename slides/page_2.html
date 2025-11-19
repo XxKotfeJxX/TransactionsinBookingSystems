@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Властивості ACID</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .slide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .title-bar {
+      background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+      padding: 1rem 2.5rem;
+      color: white;
+    }
+    .acid-card {
+      transition: all 0.3s ease;
+      border-top: 4px solid transparent;
+    }
+    .acid-card:hover {
+      transform: translateY(-5px);
+    }
+    .atomicity-border { border-color: #3B82F6; }
+    .consistency-border { border-color: #10B981; }
+    .isolation-border { border-color: #F59E0B; }
+    .durability-border { border-color: #8B5CF6; }
+    .icon-bg {
+      width: 70px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="slide">
+      <!-- Верхня панель -->
+      <div class="title-bar">
+        <h1 class="text-3xl font-bold">Властивості ACID</h1>
+      </div>
+
+      <!-- Основний контент -->
+      <div class="flex-1 p-10">
+        <h2 class="text-xl text-gray-600 mb-6">4 ключові властивості, які забезпечують надійність у системах бронювання</h2>
+        
+        <div class="grid grid-cols-2 gap-8">
+          <!-- Atomicity -->
+          <div class="acid-card atomicity-border bg-white shadow-lg rounded-lg p-6 flex">
+            <div class="mr-5">
+              <div class="icon-bg bg-blue-100">
+                <i class="fas fa-ban text-3xl text-blue-600"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-blue-600 mb-2">Атомарність</h3>
+              <p class="text-gray-700 mb-3">Транзакція виконується повністю або не виконується зовсім</p>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Усі операції або успішні, або всі скасовуються</li>
+                <li>Запобігає частковому оновленню в системах бронювання</li>
+                <li>Приклад: бронювання авіаквитка включає і місце, і оплату</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Consistency -->
+          <div class="acid-card consistency-border bg-white shadow-lg rounded-lg p-6 flex">
+            <div class="mr-5">
+              <div class="icon-bg bg-green-100">
+                <i class="fas fa-balance-scale text-3xl text-green-600"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-green-600 mb-2">Сталiсть</h3>
+              <p class="text-gray-700 mb-3">База даних завжди перебуває у коректному стані</p>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Дотримання обмежень і правил</li>
+                <li>Запобігає овербукінгу номерів або місць</li>
+                <li>Приклад: неможливо забронювати один номер двічі</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Isolation -->
+          <div class="acid-card isolation-border bg-white shadow-lg rounded-lg p-6 flex">
+            <div class="mr-5">
+              <div class="icon-bg bg-yellow-100">
+                <i class="fas fa-lock text-3xl text-yellow-600"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-yellow-600 mb-2">Ізоляція</h3>
+              <p class="text-gray-700 mb-3">Паралельні транзакції не заважають одна одній</p>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Уникнення "брудного читання", неузгоджених результатів</li>
+                <li>Серіалізація операцій у багатокористувацькому режимі</li>
+                <li>Приклад: двоє не можуть забронювати одне місце</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Durability -->
+          <div class="acid-card durability-border bg-white shadow-lg rounded-lg p-6 flex">
+            <div class="mr-5">
+              <div class="icon-bg bg-purple-100">
+                <i class="fas fa-database text-3xl text-purple-600"></i>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-purple-600 mb-2">Надiйнiсть</h3>
+              <p class="text-gray-700 mb-3">Після підтвердження дані залишаються збереженими</p>
+              <ul class="text-gray-600 list-disc ml-5">
+                <li>Транзакція зберігається навіть після збоїв</li>
+                <li>Використання логів попереднього запису (WAL)</li>
+                <li>Приклад: підтверджене бронювання не втрачається</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

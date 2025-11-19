@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Undo/Redo та Rollback</title>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+  <script src="https://picture-search.skywork.ai/aippt/static/tailwindcss.com"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background-color: #F3F4F6;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: sans-serif;
+    }
+    .wrapper {
+      width: 1280px;
+      height: 720px;
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    }
+    .slide {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    .title-bar {
+      background: linear-gradient(90deg, #3B82F6 0%, #93C5FD 100%);
+      padding: 1rem 2.5rem;
+      color: white;
+    }
+    .node {
+      transition: all 0.3s ease;
+    }
+    .node:hover {
+      transform: scale(1.05);
+    }
+    .commit-path {
+      border-color: #10B981;
+      background-color: rgba(16, 185, 129, 0.08);
+    }
+    .rollback-path {
+      border-color: #EF4444;
+      background-color: rgba(239, 68, 68, 0.08);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="slide">
+      <!-- Верхня панель -->
+      <div class="title-bar">
+        <h1 class="text-3xl font-bold">Undo/Redo та Відкат Транзакцій</h1>
+      </div>
+
+      <!-- Основний контент -->
+<div class="flex-1 flex flex-col px-10 pt-10 pb-10 overflow-y-auto">
+  <div class="w-full max-w-6xl mx-auto flex flex-col gap-y-10">
+    <!-- Заголовок -->
+    <div>
+      <h2 class="text-xl text-gray-600 text-center">Життєвий цикл транзакції та механізми відновлення</h2>
+    </div>
+
+    <!-- Діаграма -->
+    <div class="flex flex-col gap-y-8">
+      <!-- Вузли -->
+      <div class="flex justify-around items-center">
+        <div class="node bg-blue-100 p-3 rounded-lg shadow-md w-44 text-center">
+          <i class="fas fa-play-circle text-blue-600 text-2xl mb-1"></i>
+          <p class="font-medium">Початок транзакції</p>
+        </div>
+        <div class="node bg-gray-100 p-3 rounded-lg shadow-md w-44 text-center">
+          <i class="fas fa-cogs text-gray-600 text-2xl mb-1"></i>
+          <p class="font-medium">Операції</p>
+        </div>
+        <div class="node bg-yellow-100 p-3 rounded-lg shadow-md w-44 text-center">
+          <i class="fas fa-question-circle text-yellow-600 text-2xl mb-1"></i>
+          <p class="font-medium">Рішення</p>
+        </div>
+      </div>
+
+      <!-- Гілки -->
+      <div class="flex justify-between gap-6 pt-2">
+        <!-- Commit -->
+        <div class="commit-path border-2 rounded-lg p-4 flex-1">
+          <h3 class="text-lg font-bold text-green-600 mb-2 flex items-center">
+            <i class="fas fa-check-circle mr-2"></i> Гілка підтвердження (Commit)
+          </h3>
+          <div class="flex items-center gap-4 mb-2 justify-center">
+            <div class="node bg-blue-50 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-redo-alt text-blue-600 text-xl mb-1"></i>
+              <p class="text-sm">Запис у Redo-лог</p>
+            </div>
+            <div class="node bg-green-50 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-database text-green-600 text-xl mb-1"></i>
+              <p class="text-sm">Застосування змін</p>
+            </div>
+            <div class="node bg-green-100 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-check text-green-600 text-xl mb-1"></i>
+              <p class="text-sm">Підтверджено</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rollback -->
+        <div class="rollback-path border-2 rounded-lg p-4 flex-1">
+          <h3 class="text-lg font-bold text-red-600 mb-2 flex items-center">
+            <i class="fas fa-undo mr-2"></i> Гілка скасування (Rollback)
+          </h3>
+          <div class="flex items-center gap-4 mb-2 justify-center">
+            <div class="node bg-red-50 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-undo text-red-600 text-xl mb-1"></i>
+              <p class="text-sm">Читання Undo-логу</p>
+            </div>
+            <div class="node bg-red-50 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-rotate-left text-red-600 text-xl mb-1"></i>
+              <p class="text-sm">Скасування змін</p>
+            </div>
+            <div class="node bg-red-100 p-2 rounded-lg shadow w-40 text-center">
+              <i class="fas fa-times text-red-600 text-xl mb-1"></i>
+              <p class="text-sm">Скасовано</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Легенда -->
+      <div class="grid grid-cols-2 gap-4 pt-6">
+        <div class="bg-gray-50 p-4 rounded-lg shadow">
+          <h3 class="text-lg font-bold text-gray-700 mb-2">Redo Log</h3>
+          <ul class="list-disc text-gray-600 ml-5 text-sm">
+            <li>Фіксує зміни перед записом у БД</li>
+            <li>Гарантує збереження після crash</li>
+            <li>Використовується для відновлення</li>
+          </ul>
+        </div>
+        <div class="bg-gray-50 p-4 rounded-lg shadow">
+          <h3 class="text-lg font-bold text-gray-700 mb-2">Undo Log</h3>
+          <ul class="list-disc text-gray-600 ml-5 text-sm">
+            <li>Зберігає старі значення для відкату</li>
+            <li>Дозволяє відкотити транзакцію</li>
+            <li>Забезпечує атомарність</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</body>
+</html>

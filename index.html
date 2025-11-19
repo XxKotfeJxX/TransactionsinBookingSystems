@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+<title>Презентація</title>
+
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    background: #ffffff;
+    overflow: hidden;
+    font-family: sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .slide-frame {
+    width: 1280px;
+    height: 720px;
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+    overflow: hidden;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    opacity: 1;
+    transition: opacity 0.45s ease;
+  }
+
+  /* Стрілки */
+  .nav-btn {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 48px;
+    color: black;
+    opacity: 0.25;
+    cursor: pointer;
+    transition: 0.2s;
+    user-select: none;
+  }
+  .nav-btn:hover {
+    opacity: 0.9;
+  }
+  #prev-btn { left: 30px; }
+  #next-btn { right: 30px; }
+</style>
+</head>
+
+<body>
+
+<div style="position:relative; width:1280px; height:720px;">
+  <iframe id="frameA" class="slide-frame"></iframe>
+  <iframe id="frameB" class="slide-frame" style="opacity:0;"></iframe>
+</div>
+
+<div id="prev-btn" class="nav-btn">←</div>
+<div id="next-btn" class="nav-btn">→</div>
+
+<script>
+  const slides = [
+    "slides/page_1.html",
+    "slides/page_2.html",
+    "slides/page_3.html",
+    "slides/page_4.html",
+    "slides/page_5.html",
+    "slides/page_6.html",
+    "slides/page_7.html",
+    "slides/page_8.html",
+    "slides/page_9.html",
+    "slides/page_10.html",
+    "slides/page_11.html",
+    "slides/page_12.html",
+  ];
+
+  let current = 0;
+
+  let visible = document.getElementById("frameA");
+  let hidden = document.getElementById("frameB");
+
+  // Завантажуємо перший слайд
+  visible.src = slides[0];
+
+  function swapFrames() {
+    let temp = visible;
+    visible = hidden;
+    hidden = temp;
+  }
+
+  function gotoSlide(newIndex) {
+    if (newIndex < 0 || newIndex >= slides.length) return;
+
+    hidden.src = slides[newIndex];
+
+    // Коли прихований iframe завантажиться → робимо плавний перехід
+    hidden.onload = () => {
+      // fade-out видимий
+      visible.style.opacity = 0;
+      // fade-in прихований
+      hidden.style.opacity = 1;
+
+      setTimeout(() => {
+        // міняємо ролі
+        swapFrames();
+        // сховати старий iframe
+        hidden.style.opacity = 0;
+      }, 450);
+    };
+
+    current = newIndex;
+  }
+
+  document.getElementById("next-btn").onclick = () =>
+    gotoSlide(current + 1);
+
+  document.getElementById("prev-btn").onclick = () =>
+    gotoSlide(current - 1);
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "ArrowRight" || e.key === "PageDown" || e.key === " ") {
+      gotoSlide(current + 1);
+    }
+    if (e.key === "ArrowLeft" || e.key === "PageUp") {
+      gotoSlide(current - 1);
+    }
+  });
+</script>
+
+</body>
+</html>
